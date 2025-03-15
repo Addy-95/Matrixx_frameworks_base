@@ -34,12 +34,9 @@ public class WaveformEffect implements Parcelable {
         mEffectLoop = false;
     }
 
-    public int getEffectType() {
-        return mEffectType;
-    }
-
-    public boolean getEffectLoop() {
-        return mEffectLoop;
+    private WaveformEffect(Parcel in) {
+        mEffectType = in.readInt();
+        mEffectLoop = in.readBoolean();
     }
 
     public static class Builder {
@@ -51,18 +48,6 @@ public class WaveformEffect implements Parcelable {
             mEffectLoop = false;
         }
 
-        public Builder(WaveformEffect effect) {
-            mEffectType = -1;
-            mEffectLoop = false;
-        }
-
-        public WaveformEffect build() {
-            WaveformEffect effect = new WaveformEffect();
-            effect.mEffectType = mEffectType;
-            effect.mEffectLoop = mEffectLoop;
-            return effect;
-        }
-
         public Builder setEffectType(int type) {
             mEffectType = type;
             return this;
@@ -72,6 +57,21 @@ public class WaveformEffect implements Parcelable {
             mEffectLoop = loop;
             return this;
         }
+
+        public WaveformEffect build() {
+            WaveformEffect effect = new WaveformEffect();
+            effect.mEffectType = mEffectType;
+            effect.mEffectLoop = mEffectLoop;
+            return effect;
+        }
+    }
+
+    public int getEffectType() {
+        return mEffectType;
+    }
+
+    public boolean getEffectLoop() {
+        return mEffectLoop;
     }
 
     @Override
@@ -85,13 +85,11 @@ public class WaveformEffect implements Parcelable {
         dest.writeBoolean(mEffectLoop);
     }
 
-    private WaveformEffect(Parcel in) {
-        mEffectType = in.readInt();
-        mEffectLoop = in.readBoolean();
-    }
-
     @Override
     public String toString() {
-        return String.valueOf(mEffectType);
+        return "WaveformEffect{" +
+                "mEffectType=" + mEffectType +
+                ", mEffectLoop=" + mEffectLoop +
+                '}';
     }
 }
